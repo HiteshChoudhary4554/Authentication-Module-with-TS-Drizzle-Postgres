@@ -2,11 +2,8 @@ import type { Request, Response, NextFunction } from 'express';
 import { verifyUserToken } from '../auth/utils/token';
 
 export function authenticationMiddleware() {
-    return function (req : Request, res : Response,  next : NextFunction) {
+    return async function (req : Request, res : Response,  next : NextFunction) {
         const header = req?.headers['authorization'];
-
-        console.log("header => ", header);
-
 
         if (!header) {
             return next();
@@ -19,11 +16,9 @@ export function authenticationMiddleware() {
         const token = header.split(' ')[1];
 
         if(!token) return res.status(400).json({ error : "autherization header must start with bearer" });
-
-        const user = verifyUserToken(token);
+        const user = await verifyUserToken(token);
         // @ts-ignore
         req.user = user;
-
         next();
 
     }

@@ -7,6 +7,6 @@ export const authRouter:Router = express();
 
 authRouter.post("/sign-up", AuthenticationMethod.handleSignup);
 authRouter.post("/sign-in", AuthenticationMethod.handleSignin);
-authRouter.get("/get-me", restrictToAuthenticatedUser(), AuthenticationMethod.getMe);
+authRouter.get("/get-me/:token", restrictToAuthenticatedUser(), AuthenticationMethod.getMe);
 
 

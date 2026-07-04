@@ -66,7 +66,7 @@ class AuthenticationController {
 
         if (!token) return res.status(400).json({ message : "unauthorized user", error : "required token" });
 
-        const decoded = await verifyUserToken(token);
+        const decoded = await verifyUserToken(String(token));
 
         if (!decoded.payload.id) return res.status(400).json({ message : "Invaild token" , error : "invalid token"});
 
